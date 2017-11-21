@@ -32,6 +32,20 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal" >
 
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_get_time" />
+
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/button_set_time" />
+
         <EditText
             android:id="@+id/edit_text_out"
             android:layout_width="wrap_content"

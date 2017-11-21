@@ -37,5 +37,7 @@
     <string name="secure_connect">Connect a device - Secure</string>
     <string name="insecure_connect">Connect a device - Insecure</string>
     <string name="discoverable">Make discoverable</string>
+    <string name="button_get_time">Get Time</string>
+    <string name="button_set_time">Send Time</string>
 
 </resources>

@@ -44,6 +44,9 @@ import android.widget.Toast;
 
 import com.example.android.common.logger.Log;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+
 /**
  * This fragment controls Bluetooth to communicate with other devices.
  */
@@ -187,6 +190,16 @@ public class BluetoothChatFragment extends Fragment {
         mOutStringBuffer = new StringBuffer("");
     }
 
+    public void setTimeBtn(View v){
+        byte[] cmd={Constants.CMD_SETTIME,0,0,0};
+        GregorianCalendar cal = new GregorianCalendar();
+
+        cmd[1] = (byte)cal.get(Calendar.HOUR_OF_DAY);
+        cmd[2] = (byte)cal.get(Calendar.MINUTE);
+        cmd[3] = (byte)cal.get(Calendar.SECOND);
+        sendBytes(cmd);
+    }
+
     /**
      * Makes this device discoverable for 300 seconds (5 minutes).
      */
@@ -198,6 +211,30 @@ public class BluetoothChatFragment extends Fragment {
             startActivity(discoverableIntent);
         }
     }
+
+    /**
+     * Sends a command.
+     *
+     * @param bs A byte array to send to.
+     */
+    private void sendBytes(byte[] bs) {
+        // Check that we're actually connected before trying anything
+        if (mChatService.getState() != BluetoothChatService.STATE_CONNECTED) {
+            Toast.makeText(getActivity(), R.string.not_connected, Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Check that there's actually something to send
+        if (bs.length > 0) {
+            // Get the message bytes and tell the BluetoothChatService to write
+            mChatService.write(bs);
+
+            // Reset out string buffer to zero and clear the edit text field
+            //mOutStringBuffer.setLength(0);
+            //mOutEditText.setText(mOutStringBuffer);
+        }
+    }
+
 
     /**
      * Sends a message.
